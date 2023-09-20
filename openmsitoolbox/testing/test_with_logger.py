@@ -6,6 +6,7 @@ import logging
 from .. import LogOwner
 from ..utilities.misc import populated_kwargs
 
+
 class TestWithLogger(LogOwner, unittest.TestCase):
     """
     Base class for unittest.TestCase classes that should own a logger

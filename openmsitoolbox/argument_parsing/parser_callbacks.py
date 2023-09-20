@@ -5,19 +5,21 @@ import pathlib
 import math
 import logging
 
+
 def logger_string_to_level(argval):
     """
     converts a given string representing a logger level to its corresponding integer
     """
     argval = argval.lower()
     if argval in ("notset", "debug", "info", "warning", "error", "critical"):
-        return getattr(logging,argval.upper())
+        return getattr(logging, argval.upper())
     try:
         if int(argval) >= 0:
             return int(argval)
         raise ValueError(f"ERROR: logger argument {argval} is not valid!")
     except ValueError as exc:
         raise exc
+
 
 def existing_file(argstring):
     """
@@ -55,6 +57,7 @@ def create_dir(argstring):
     dirpath.mkdir(parents=True)
     return dirpath.resolve()
 
+
 def int_power_of_two(argval):
     """
     make sure a given value is a nonzero integer power of two (or can be converted to one)
@@ -74,5 +77,7 @@ def positive_int(argval):
     """
     argval = int(argval)
     if (not isinstance(argval, int)) or (argval < 1):
-        raise ValueError(f"ERROR: invalid argument: {argval} must be a positive integer!")
+        raise ValueError(
+            f"ERROR: invalid argument: {argval} must be a positive integer!"
+        )
     return argval

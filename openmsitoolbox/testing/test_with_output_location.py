@@ -5,6 +5,7 @@ import shutil
 from .test_with_logger import TestWithLogger
 from .config import TESTING_CONST
 
+
 class TestWithOutputLocation(TestWithLogger):
     """
     Base class for unittest.TestCase classes that will put output in a directory.
@@ -30,7 +31,9 @@ class TestWithOutputLocation(TestWithLogger):
             )
         # if output from a previous test already exists, remove it
         if self.output_dir.is_dir():
-            self.log_at_info(f"Will delete existing output location at {self.output_dir}")
+            self.log_at_info(
+                f"Will delete existing output location at {self.output_dir}"
+            )
             try:
                 shutil.rmtree(self.output_dir)
             except Exception as exc:  # pylint: disable=broad-except

@@ -3,6 +3,7 @@
 # imports
 import logging
 
+
 class OpenMSIFormatter(logging.Formatter):
     """
     Very small extension of the usual logging.Formatter to allow modification of format

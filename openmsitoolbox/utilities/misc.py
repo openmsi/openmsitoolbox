@@ -5,6 +5,7 @@ import os
 import inspect
 import contextlib
 
+
 def raise_err_with_optional_logger(logger, errmsg, exc_type):
     """
     If logger is not None, log the error message with the given exception type,
@@ -24,6 +25,7 @@ def debug_msg_with_optional_logger(logger, msg):
         logger.debug(msg)
     else:
         print(msg)
+
 
 def _ensure_classes_or_types_match_for_key(key, test, options, logger=None):
     """
@@ -49,7 +51,9 @@ def _ensure_classes_or_types_match_for_key(key, test, options, logger=None):
     elif (isinstance(options, tuple) and type(test) not in options[1:]) or (
         not isinstance(options, tuple) and not isinstance(test, type(options))
     ):
-        errmsg = f'ERROR: Type mismatch replacing argument "{key}" with {test} (expected '
+        errmsg = (
+            f'ERROR: Type mismatch replacing argument "{key}" with {test} (expected '
+        )
         if isinstance(options, tuple):
             for typestring in options[1:]:
                 errmsg += f"{typestring}, "

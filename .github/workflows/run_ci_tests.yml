@@ -16,8 +16,8 @@ jobs:
       run: pip install .["test"]
     - name: Format code with Black
       run: |
-        black openmsitoolbox --check --diff
-        black test --check --diff
+        black openmsitoolbox --check
+        black test --check
     - name: Check code with pyflakes
       run: |
         pyflakes .

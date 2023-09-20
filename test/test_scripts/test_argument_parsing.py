@@ -16,6 +16,7 @@ from openmsitoolbox.argument_parsing.parser_callbacks import (
 from openmsitoolbox import OpenMSIArgumentParser
 from config import TEST_CONST  # pylint: disable=import-error,wrong-import-order
 
+
 class TestArgumentParsing(TestWithOutputLocation):
     """
     Class for testing functions in utilities/argument_parsing.py
@@ -127,7 +128,7 @@ class TestArgumentParsing(TestWithOutputLocation):
         """
         Test the int_power_of_two argument parser callback
         """
-        self.assertEqual(int_power_of_two(524288),524288)
+        self.assertEqual(int_power_of_two(524288), 524288)
         self.assertEqual(int_power_of_two(16384), 16384)
         self.assertEqual(int_power_of_two(4), 4)
         self.assertEqual(int_power_of_two("8"), 8)
