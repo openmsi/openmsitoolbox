@@ -42,6 +42,7 @@ setupkwargs = {
             "packaging",
             "pyflakes",
             "pylint",
+            "requests",
         ],
         "dev": [
             "twine",
