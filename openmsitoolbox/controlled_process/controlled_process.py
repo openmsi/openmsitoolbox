@@ -12,6 +12,7 @@ from abc import ABC, abstractmethod
 from ..logging.log_owner import LogOwner
 from ..argument_parsing.openmsi_argument_parser import OpenMSIArgumentParser
 
+
 def add_user_input(input_queue):
     """
     Listen for and add user input to a queue at one second intervals

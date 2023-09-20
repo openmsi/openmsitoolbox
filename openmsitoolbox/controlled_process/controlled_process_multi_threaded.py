@@ -45,7 +45,9 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
         # correct the arguments for each thread
         if args_per_thread is not None:
             self.__args_per_thread = args_per_thread
-        if self.__args_per_thread == [] or (not isinstance(self.__args_per_thread, list)):
+        if self.__args_per_thread == [] or (
+            not isinstance(self.__args_per_thread, list)
+        ):
             self.__args_per_thread = [self.__args_per_thread]
         if not len(self.__args_per_thread) == self.n_threads:
             if not len(self.__args_per_thread) == 1:
@@ -125,7 +127,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
                 # try to join the thread
                 try:
                     thread.join()
-                except Exception: # pylint: disable=broad-exception-caught
+                except Exception:  # pylint: disable=broad-exception-caught
                     pass
                 finally:
                     self.__threads[ti] = None

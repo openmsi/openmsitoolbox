@@ -27,7 +27,7 @@ class ExceptionTrackingThread(Thread):
         """
         try:
             super().run(*args, **kwargs)
-        except Exception as exc: # pylint: disable=broad-exception-caught
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             self.__exc = exc
 
     def join(self, *args, **kwargs):
