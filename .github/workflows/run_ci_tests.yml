@@ -23,6 +23,7 @@ jobs:
         pyflakes .
         cd test
         pyflakes .
+        cd ..
     - name: Lint code with pylint
       run: |
         pylint openmsitoolbox
