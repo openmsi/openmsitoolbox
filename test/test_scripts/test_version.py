@@ -29,9 +29,6 @@ class TestVersion(unittest.TestCase):
     def test_version_incremented(self):
         """Make sure the current version from PyPI is less than the version from the
         package as it is right now"""
-        d = {"a": 1, "b": 2}
-        for key in d.keys():
-            print(key)
         pypi_version = parse(self.get_latest_pypi_version("openmsitoolbox"))
         try:
             current_version = parse(openmsitoolbox.__version__)
