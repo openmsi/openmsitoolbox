@@ -157,7 +157,9 @@ def skip_unmatched_tests(args, suites):
                             "are being skipped"
                         )
                         setattr(
-                            test, test_name, unittest.skip(msg)(getattr(test, test_name))
+                            test,
+                            test_name,
+                            unittest.skip(msg)(getattr(test, test_name)),
                         )
 
 

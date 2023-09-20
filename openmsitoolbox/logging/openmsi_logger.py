@@ -5,6 +5,7 @@ import logging
 import pathlib
 from .formatter import OpenMSIFormatter
 
+
 class OpenMSILogger:
     """
     A general logger in OpenMSI format.

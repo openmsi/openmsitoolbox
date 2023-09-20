@@ -2,7 +2,13 @@
 
 # imports
 from argparse import ArgumentParser
-from .parser_callbacks import logger_string_to_level, existing_file, create_dir, positive_int
+from .parser_callbacks import (
+    logger_string_to_level,
+    existing_file,
+    create_dir,
+    positive_int,
+)
+
 
 class OpenMSIArgumentParser(ArgumentParser):
     """
@@ -17,7 +23,7 @@ class OpenMSIArgumentParser(ArgumentParser):
     to send to :func:`argparse.ArgumentParser.add_argument`.
     """
 
-    DEF_UPDATE_SECS = 300 # default update seconds
+    DEF_UPDATE_SECS = 300  # default update seconds
 
     ARGUMENTS = {
         "logger_stream_level": [
@@ -71,7 +77,10 @@ class OpenMSIArgumentParser(ArgumentParser):
             "optional",
             {"type": create_dir, "help": "Optional path to directory to put output in"},
         ],
-        "service_name": ["positional", {"help": "The name of the service to work with"}],
+        "service_name": [
+            "positional",
+            {"help": "The name of the service to work with"},
+        ],
         "optional_service_name": [
             "optional",
             {

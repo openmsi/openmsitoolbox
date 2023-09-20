@@ -37,7 +37,13 @@ setupkwargs = {
     "python_requires":">=3.7",
     "install_requires":[],
     "extras_require":{
-        "test": [],
+        "test": [
+            "black",
+            "packaging",
+            "pyflakes",
+            "pylint",
+            "requests",
+        ],
         "dev": [
             "twine",
         ],

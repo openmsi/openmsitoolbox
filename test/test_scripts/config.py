@@ -24,4 +24,5 @@ class TestRoutineConstants:
         / TEST_DATA_FILE_NAME
     )
 
+
 TEST_CONST = TestRoutineConstants()
