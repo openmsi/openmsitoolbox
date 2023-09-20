@@ -21,28 +21,12 @@ jobs:
     - name: Check code with pyflakes
       run: |
         pyflakes .
-        if [ $? -ne 0 ]; then
-          echo "Pyflakes on openmsitoolbox failed!"
-          exit 1
-        fi
         cd test
         pyflakes .
-        if [ $? -ne 0 ]; then
-          echo "Pyflakes on tests failed!"
-          exit 1
-        fi
         cd ..
     - name: Lint code with pylint
       run: |
         pylint openmsitoolbox
-        if [ $? -ne 0 ]; then
-          echo "Pylint on openmsitoolbox failed!"
-          exit 1
-        fi
         pylint --recursive=y test
-        if [ $? -ne 0 ]; then
-          echo "Pylint on tests failed!"
-          exit 1
-        fi
     - name: Run tests with unittest
       run: python -m unittest discover test/test_scripts
