@@ -25,6 +25,7 @@ class TestVersion(unittest.TestCase):
             release_date = datetime.datetime.fromisoformat(
                 data["releases"][version][0]["upload_time_iso_8601"]
             )
+            release_date = release_date.replace(tzinfo=datetime.timezone.utc)
             return parse(version), release_date
         except Exception as exc:
             raise NameError(
@@ -43,7 +44,8 @@ class TestVersion(unittest.TestCase):
             raise ValueError(
                 f"Version string {openmsitoolbox.__version__} is not valid!"
             ) from exc
-        if (datetime.datetime.now() - release_date).total_seconds / 60.0 < 10.0:
+        current_time = datetime.datetime.now().astimezone(datetime.timezone.utc)
+        if (current_time - release_date).total_seconds() / 60.0 < 10.0:
             self.assertTrue(
                 pypi_version == current_version,
                 (
