@@ -23,7 +23,7 @@ class TestVersion(unittest.TestCase):
             data = response.json()
             version = data["info"]["version"]
             release_date = datetime.datetime.fromisoformat(
-                data["releases"][version][0]["upload_time_iso_8601"]
+                data["releases"][version][0]["upload_time"]
             )
             release_date = release_date.replace(tzinfo=datetime.timezone.utc)
             return parse(version), release_date
