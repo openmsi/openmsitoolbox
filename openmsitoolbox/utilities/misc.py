@@ -1,12 +1,17 @@
 " Some miscellaneous functions that are universally internally available "
 
 # imports
+from typing import Any, Dict, Type
 import os
 import inspect
 import contextlib
+import pathlib
+from ..logging import OpenMSILogger
 
 
-def raise_err_with_optional_logger(logger, errmsg, exc_type):
+def raise_err_with_optional_logger(
+    logger: OpenMSILogger, errmsg: str, exc_type: Type[Exception]
+) -> None:
     """
     If logger is not None, log the error message with the given exception type,
     otherwise raise the error
@@ -17,7 +22,7 @@ def raise_err_with_optional_logger(logger, errmsg, exc_type):
         raise exc_type(errmsg)
 
 
-def debug_msg_with_optional_logger(logger, msg):
+def debug_msg_with_optional_logger(logger: OpenMSILogger, msg: str) -> None:
     """
     Log a given message at debug level if logger is not None, otherwise print it
     """
@@ -27,7 +32,9 @@ def debug_msg_with_optional_logger(logger, msg):
         print(msg)
 
 
-def _ensure_classes_or_types_match_for_key(key, test, options, logger=None):
+def _ensure_classes_or_types_match_for_key(
+    key: str, test: Any, options: Any, logger: OpenMSILogger = None
+) -> None:
     """
     Raise errors if "test" is not a subclass of the possibilities in "options"
     if "options" holds classes, or if the type of "test" is not in "options"
@@ -63,7 +70,9 @@ def _ensure_classes_or_types_match_for_key(key, test, options, logger=None):
         raise_err_with_optional_logger(logger, errmsg, TypeError)
 
 
-def populated_kwargs(given_kwargs, defaults, logger=None):
+def populated_kwargs(
+    given_kwargs: Dict[str, Any], defaults: Dict[str, Any], logger: OpenMSILogger = None
+) -> Dict[str, Any]:
     """
     Return a kwargs dictionary where every possible entry from the defaults has a valid value
     Can use this to make sure certain entries are present in kwargs
@@ -90,7 +99,7 @@ def populated_kwargs(given_kwargs, defaults, logger=None):
 
 
 @contextlib.contextmanager
-def change_dir(dirpath):
+def change_dir(dirpath: pathlib.Path) -> None:
     """
     Change the current working directory to a different directory,
     and go back when leaving the context manager.

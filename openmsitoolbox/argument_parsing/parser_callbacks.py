@@ -6,7 +6,7 @@ import math
 import logging
 
 
-def logger_string_to_level(argval):
+def logger_string_to_level(argval: str) -> int:
     """
     converts a given string representing a logger level to its corresponding integer
     """
@@ -21,7 +21,7 @@ def logger_string_to_level(argval):
         raise exc
 
 
-def existing_file(argstring):
+def existing_file(argstring: str) -> pathlib.Path:
     """
     convert a string or path argument into a path to a file, checking if it exists
     """
@@ -31,7 +31,7 @@ def existing_file(argstring):
     raise FileNotFoundError(f"ERROR: file {argstring} does not exist!")
 
 
-def existing_dir(argstring):
+def existing_dir(argstring: str) -> pathlib.Path:
     """
     convert a string or path argument into a directory path, checking if it exists
     """
@@ -41,7 +41,7 @@ def existing_dir(argstring):
     raise FileNotFoundError(f"ERROR: directory {argstring} does not exist!")
 
 
-def create_dir(argstring):
+def create_dir(argstring: str) -> pathlib.Path:
     """
     convert a string or path argument into a directory path, creating it if necessary
     """
@@ -58,7 +58,7 @@ def create_dir(argstring):
     return dirpath.resolve()
 
 
-def int_power_of_two(argval):
+def int_power_of_two(argval: str) -> int:
     """
     make sure a given value is a nonzero integer power of two (or can be converted to one)
     """
@@ -71,7 +71,7 @@ def int_power_of_two(argval):
     return argval
 
 
-def positive_int(argval):
+def positive_int(argval: str) -> int:
     """
     make sure a given value is a positive integer
     """

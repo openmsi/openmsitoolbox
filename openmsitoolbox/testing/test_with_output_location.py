@@ -2,6 +2,7 @@
 
 # imports
 import shutil
+import pathlib
 from .test_with_logger import TestWithLogger
 from .config import TESTING_CONST
 
@@ -12,13 +13,13 @@ class TestWithOutputLocation(TestWithLogger):
     Also owns an OpenMSIStream Logger.
     """
 
-    def __init__(self, *args, output_dir=None, **kwargs):
+    def __init__(self, *args, output_dir: pathlib.Path = None, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.output_dir = output_dir
         self.test_dependent_output_dirs = self.output_dir is None
         self.success = False
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Create the output location, removing it if it already exists.
         Set success to false before every test.
@@ -47,7 +48,7 @@ class TestWithOutputLocation(TestWithLogger):
         # set the success variable to false
         self.success = False
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         # if the test was successful, remove the output directory
         if self.success:
             try:

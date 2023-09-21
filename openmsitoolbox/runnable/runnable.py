@@ -4,7 +4,9 @@ Defining the general OpenMSI workflow for running from the command line
 """
 
 # imports
+from typing import List
 from abc import ABC, abstractmethod
+from argparse import ArgumentParser
 from .. import OpenMSIArgumentParser
 from ..argument_parsing.has_arguments import HasArguments
 from ..argument_parsing.has_argument_parser import HasArgumentParser
@@ -18,7 +20,7 @@ class Runnable(HasArguments, HasArgumentParser, ABC):
     ARGUMENT_PARSER_TYPE = OpenMSIArgumentParser
 
     @classmethod
-    def get_argument_parser(cls, *args, **kwargs):
+    def get_argument_parser(cls, *args, **kwargs) -> ArgumentParser:
         """
         Get the argument parser used to run the code
 
@@ -40,7 +42,7 @@ class Runnable(HasArguments, HasArgumentParser, ABC):
 
     @classmethod
     @abstractmethod
-    def run_from_command_line(cls, args=None):
+    def run_from_command_line(cls, args: List[str] = None) -> None:
         """
         Child classes should implement this function to do whatever it is they do
         when they run from the command line

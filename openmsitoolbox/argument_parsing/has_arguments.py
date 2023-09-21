@@ -5,6 +5,7 @@ also extends Runnable
 
 # imports
 from abc import ABC, abstractmethod
+from typing import List, Dict, Tuple, Any
 
 
 class HasArguments(ABC):
@@ -14,7 +15,7 @@ class HasArguments(ABC):
 
     @classmethod
     @abstractmethod
-    def get_command_line_arguments(cls):
+    def get_command_line_arguments(cls) -> Tuple[List[str], Dict[str, Any]]:
         """
         Get the list of argument names and the dictionary of argument names/default values
         to add to the argument parser

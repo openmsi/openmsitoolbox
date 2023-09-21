@@ -13,7 +13,7 @@ class OpenMSIFormatter(logging.Formatter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         """
         If a message starts with a newline, start the actual logging line with the newline
         before any of the rest

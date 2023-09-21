@@ -1,13 +1,17 @@
 """Custom argument parser and associated functions"""
 
 # imports
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Action
+from typing import Any, Dict, List, Tuple, Type, TYPE_CHECKING
 from .parser_callbacks import (
     logger_string_to_level,
     existing_file,
     create_dir,
     positive_int,
 )
+
+if TYPE_CHECKING:
+    from ..runnable.runnable import Runnable
 
 
 class OpenMSIArgumentParser(ArgumentParser):
@@ -135,9 +139,7 @@ class OpenMSIArgumentParser(ArgumentParser):
         ],
     }
 
-    #################### OVERLOADED FUNCTIONS ####################
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.__argnames_added = []
         self.__subparsers_action_obj = None
@@ -167,7 +169,7 @@ class OpenMSIArgumentParser(ArgumentParser):
 
     #################### UNIQUE FUNCTIONS ####################
 
-    def add_arguments(self, *args, **kwargs):
+    def add_arguments(self, *args, **kwargs) -> None:
         """
         Add a group of common arguments to the parser
 
@@ -207,8 +209,12 @@ class OpenMSIArgumentParser(ArgumentParser):
                 self.__argnames_added.append(argname_to_add)
 
     def add_subparser_arguments(
-        self, subp_name, args_to_add=None, kwargs_to_add=None, **other_kwargs
-    ):
+        self,
+        subp_name: str,
+        args_to_add: List[str] = None,
+        kwargs_to_add: Dict[str, Any] = None,
+        **other_kwargs,
+    ) -> None:
         """
         Create a new subparser and add arguments to it.
 
@@ -263,16 +269,16 @@ class OpenMSIArgumentParser(ArgumentParser):
 
     def add_subparser_arguments_from_class(
         self,
-        class_to_add,
+        class_to_add: Type["Runnable"],
         *,
-        subp_name=None,
-        addl_args=None,
-        addl_kwargs=None,
+        subp_name: str = None,
+        addl_args: List[str] = None,
+        addl_kwargs: Dict[str, Any] = None,
         **other_kwargs,
-    ):
+    ) -> None:
         """
         Create a new subparser and add arguments from the given class to it.
-        `class_to_add must` inherit from :class:`~Runnable` to be able to get its arguments.
+        `class_to_add` must inherit from :class:`~Runnable` to be able to get its arguments.
 
         :param subp_name: an override for the name of the command the subparser
             should be registered under. (Default is the name of the class.)
@@ -300,7 +306,9 @@ class OpenMSIArgumentParser(ArgumentParser):
             subp_name, argnames, argnames_with_defaults, **other_kwargs
         )
 
-    def __get_argname_and_kwargs(self, argname, new_default=None):
+    def __get_argname_and_kwargs(
+        self, argname: str, new_default: Any = None
+    ) -> Tuple[str, Dict[str, Any]]:
         """
         Return the name and kwargs dict for a particular argument
 
@@ -336,7 +344,7 @@ class OpenMSIArgumentParser(ArgumentParser):
         raise ValueError(f"ERROR: argument {argname} is not recognized as an option!")
 
     @property
-    def actions(self):
+    def actions(self) -> List[Action]:
         """
         Wrapper around parser._actions to make it publicly available
         """

@@ -2,6 +2,8 @@
 
 # imports
 import logging
+import pathlib
+from typing import Any, Dict, List, Tuple
 from ..argument_parsing.has_arguments import HasArguments
 from .openmsi_logger import OpenMSILogger
 
@@ -35,7 +37,7 @@ class LogOwner(HasArguments):
         return self.__logger
 
     @logger.setter
-    def logger(self, logger):
+    def logger(self, logger: OpenMSILogger) -> None:
         if (
             hasattr(self, "_LogOwner__logger")
             and self.__logger is not None
@@ -52,13 +54,13 @@ class LogOwner(HasArguments):
     def __init__(
         self,
         *args,
-        logger=None,
-        logger_name=None,
-        streamlevel=logging.INFO,
-        logger_file=None,
-        filelevel=logging.WARNING,
+        logger: OpenMSILogger = None,
+        logger_name: str = None,
+        streamlevel: int = logging.INFO,
+        logger_file: pathlib.Path = None,
+        filelevel: int = logging.WARNING,
         **other_kwargs,
-    ):
+    ) -> None:
         if logger is not None:
             self.__logger = logger
         else:
@@ -73,7 +75,7 @@ class LogOwner(HasArguments):
         super().__init__(*args, **other_kwargs)
 
     @classmethod
-    def get_command_line_arguments(cls):
+    def get_command_line_arguments(cls) -> Tuple[List[str], Dict[str, Any]]:
         """
         Return the names of arguments for the logger stream and file levels.
         """
