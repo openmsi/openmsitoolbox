@@ -2,14 +2,15 @@
 
 # imports
 from argparse import ArgumentParser, Action
-from typing import Any, Dict, List, Tuple, Type
-from ..runnable.runnable import Runnable
+from typing import Any, Dict, List, Tuple, Type, TYPE_CHECKING
 from .parser_callbacks import (
     logger_string_to_level,
     existing_file,
     create_dir,
     positive_int,
 )
+if TYPE_CHECKING:
+    from ..runnable.runnable import Runnable
 
 
 class OpenMSIArgumentParser(ArgumentParser):
@@ -267,7 +268,7 @@ class OpenMSIArgumentParser(ArgumentParser):
 
     def add_subparser_arguments_from_class(
         self,
-        class_to_add: Type[Runnable],
+        class_to_add: Type["Runnable"],
         *,
         subp_name: str = None,
         addl_args: List[str] = None,
