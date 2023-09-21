@@ -2,6 +2,7 @@
 
 # imports
 from abc import ABC, abstractmethod
+from argparse import ArgumentParser
 
 
 class HasArgumentParser(ABC):
@@ -11,7 +12,7 @@ class HasArgumentParser(ABC):
 
     @classmethod
     @abstractmethod
-    def get_argument_parser(cls):
+    def get_argument_parser(cls) -> ArgumentParser:
         """
         Return the argument parser that objects of this class use.
 

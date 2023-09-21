@@ -11,17 +11,17 @@ class ExceptionTrackingThread(Thread):
     """
 
     @property
-    def caught_exception(self):
+    def caught_exception(self) -> Exception:
         """
         Any Exception encountered while the thread is running
         """
         return self.__exc
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.__exc = None
 
-    def run(self, *args, **kwargs):
+    def run(self, *args, **kwargs) -> None:
         """
         Wrapper around Thread.run that holds onto any Exception raised during running
         """
@@ -30,9 +30,9 @@ class ExceptionTrackingThread(Thread):
         except Exception as exc:  # pylint: disable=broad-exception-caught
             self.__exc = exc
 
-    def join(self, *args, **kwargs):
+    def join(self, *args, **kwargs) -> None:
         """
-        Wrapper around Thread.run that re-raises any Exceptions that were encountered
+        Wrapper around Thread.join that re-raises any Exceptions that were encountered
         """
         super().join(*args, **kwargs)
         if self.__exc is not None:

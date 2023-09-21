@@ -1,6 +1,7 @@
 " A ControlledProcess running with more than one thread "
 
 # imports
+from typing import Any, List, Dict, Union
 from threading import Lock
 from abc import ABC, abstractmethod
 from ..utilities.exception_tracking_thread import ExceptionTrackingThread
@@ -20,7 +21,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
         10  # time in seconds to wait for threads to join in shutdown
     )
 
-    def __init__(self, *args, n_threads=DEF_N_THREADS, **kwargs):
+    def __init__(self, *args, n_threads: int = DEF_N_THREADS, **kwargs):
         self.n_threads = n_threads
         super().__init__(*args, **kwargs)
         self.lock = Lock()
@@ -28,7 +29,11 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
         self.__kwargs_per_thread = {}
         self.__threads = []
 
-    def run(self, args_per_thread=None, kwargs_per_thread=None):
+    def run(
+        self,
+        args_per_thread: Union[Any, List[Any]] = None,
+        kwargs_per_thread: Union[Dict[str, Any], List[Dict[str, Any]]] = None,
+    ) -> None:
         """
         Create and start the set of independent threads running :func:`~_run_worker`,
         which can accept optional arguments/keyword arguments from the call to this function.
@@ -39,7 +44,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
         :type args_per_thread: list, optional
         :param kwargs_per_thread: a list of dicts of keyword arguments that should be given
             to the independent threads (one dict of keyword arguments per thread)
-        :type kwargs_per_thread: dict, optional
+        :type kwargs_per_thread: list or dict, optional
         """
         super().run()
         # correct the arguments for each thread
@@ -90,7 +95,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
             self._check_control_command_queue()
             self.__restart_crashed_threads()
 
-    def _on_shutdown(self):
+    def _on_shutdown(self) -> None:
         """
         Join all of the running threads. Can override this method further in subclasses,
         just be sure to also call :func:`super()._on_shutdown()`.
@@ -99,7 +104,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
             thread.join(self.SHUTDOWN_THREAD_TIMEOUT)
 
     @abstractmethod
-    def _run_worker(self):
+    def _run_worker(self) -> None:
         """
         The function that will actually be run in multiple threads while the process is alive.
         Should include a "while self.alive" loop to keep it running.
@@ -110,7 +115,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
         """
         raise NotImplementedError
 
-    def __restart_crashed_threads(self):
+    def __restart_crashed_threads(self) -> None:
         """
         Log (but don't re-raise) Exceptions thrown by any of the threads and restart them
         based on the args/kwargs initially passed to :func:`~run`.

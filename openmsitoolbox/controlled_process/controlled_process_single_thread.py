@@ -11,7 +11,7 @@ class ControlledProcessSingleThread(ControlledProcess, ABC):
     Every iteration a single function is called, and then the control command queue is checked.
     """
 
-    def run(self):
+    def run(self) -> None:
         """
         Start the process and call :func:`~_run_iteration` until the process is shut down
         """
@@ -22,7 +22,7 @@ class ControlledProcessSingleThread(ControlledProcess, ABC):
             self._check_control_command_queue()
 
     @abstractmethod
-    def _run_iteration(self):
+    def _run_iteration(self) -> None:
         """
         The function that is called repeatedly in an infinite loop as long as the process is alive.
 

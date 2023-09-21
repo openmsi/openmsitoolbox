@@ -3,6 +3,7 @@
 # imports
 import logging
 import pathlib
+from typing import Type
 from .formatter import OpenMSIFormatter
 
 
@@ -28,11 +29,11 @@ class OpenMSILogger:
 
     def __init__(
         self,
-        logger_name=None,
-        streamlevel=logging.INFO,
-        logger_filepath=None,
-        filelevel=logging.WARNING,
-    ):
+        logger_name: str = None,
+        streamlevel: int = logging.INFO,
+        logger_filepath: pathlib.Path = None,
+        filelevel: str = logging.WARNING,
+    ) -> None:
         """
         name = the name for this logger to use (probably something like the top module that owns it)
         """
@@ -49,7 +50,7 @@ class OpenMSILogger:
         if logger_filepath is not None:
             self.add_file_handler(logger_filepath, level=filelevel)
 
-    def set_level(self, level):
+    def set_level(self, level: int) -> None:
         """
         Set the level of the entire underlying logger
 
@@ -58,7 +59,7 @@ class OpenMSILogger:
         """
         self._logger_obj.setLevel(level)
 
-    def set_stream_level(self, level):
+    def set_stream_level(self, level: int) -> None:
         """
         Set the level of the underlying logger's streamhandler
 
@@ -67,7 +68,7 @@ class OpenMSILogger:
         """
         self._streamhandler.setLevel(level)
 
-    def get_stream_level(self):
+    def get_stream_level(self) -> int:
         """
         Get the current level of the underlying logger's streamhandler
 
@@ -75,7 +76,7 @@ class OpenMSILogger:
         """
         return self._streamhandler.level
 
-    def set_file_level(self, level):
+    def set_file_level(self, level: int) -> None:
         """
         Set the level of the underlying logger's filehandler
 
@@ -90,7 +91,9 @@ class OpenMSILogger:
             raise RuntimeError(errmsg)
         self._filehandler.setLevel(level)
 
-    def add_file_handler(self, filepath, level=logging.INFO):
+    def add_file_handler(
+        self, filepath: pathlib.Path, level: int = logging.INFO
+    ) -> None:
         """
         Add an additional :class:`logging.FileHandler` to the logger
 
@@ -115,7 +118,7 @@ class OpenMSILogger:
 
     # methods for logging different levels of messages
 
-    def debug(self, msg, *args, **kwargs):
+    def debug(self, msg: str, *args, **kwargs) -> None:
         """
         Log a message at DEBUG level. Additional args/kwargs are sent to
         the underlying logger object's debug call.
@@ -125,7 +128,7 @@ class OpenMSILogger:
         """
         self._logger_obj.debug(msg, *args, **kwargs)
 
-    def info(self, msg, *args, **kwargs):
+    def info(self, msg: str, *args, **kwargs) -> None:
         """
         Log a message at INFO level. Additional args/kwargs are sent to
         the underlying logger object's info call.
@@ -135,7 +138,7 @@ class OpenMSILogger:
         """
         self._logger_obj.info(msg, *args, **kwargs)
 
-    def warning(self, msg, *args, **kwargs):
+    def warning(self, msg: str, *args, **kwargs) -> None:
         """
         Log a message at WARNING level. Additional args/kwargs are sent to
         the underlying logger object's warning call.
@@ -147,7 +150,14 @@ class OpenMSILogger:
             msg = f"WARNING: {msg}"
         self._logger_obj.warning(msg, *args, **kwargs)
 
-    def error(self, msg, *, exc_type=None, reraise=False, **kwargs):
+    def error(
+        self,
+        msg: str,
+        *,
+        exc_type: Type[Exception] = None,
+        reraise: bool = False,
+        **kwargs,
+    ) -> None:
         """
         Log a message at ERROR level. Optionally raise an exception of a given type
         with the same message, or re-raise an Exception object passed through the

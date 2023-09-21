@@ -13,7 +13,7 @@ from ..logging.log_owner import LogOwner
 from ..argument_parsing.openmsi_argument_parser import OpenMSIArgumentParser
 
 
-def add_user_input(input_queue):
+def add_user_input(input_queue: Queue) -> None:
     """
     Listen for and add user input to a queue at one second intervals
     """
@@ -35,7 +35,7 @@ class ControlledProcess(LogOwner, ABC):
     #################### PROPERTIES ####################
 
     @property
-    def alive(self):
+    def alive(self) -> bool:
         """
         Read-only boolean indicating if the process is running
         """
@@ -44,8 +44,11 @@ class ControlledProcess(LogOwner, ABC):
     #################### PUBLIC FUNCTIONS ####################
 
     def __init__(
-        self, *args, update_secs=OpenMSIArgumentParser.DEF_UPDATE_SECS, **other_kwargs
-    ):
+        self,
+        *args,
+        update_secs: int = OpenMSIArgumentParser.DEF_UPDATE_SECS,
+        **other_kwargs
+    ) -> None:
         self.__update_secs = update_secs
         # start up a Queue that will hold the control commands
         self.control_command_queue = Queue()
@@ -62,7 +65,7 @@ class ControlledProcess(LogOwner, ABC):
         self.__last_update = datetime.datetime.now()
         super().__init__(*args, **other_kwargs)
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         """
         Stop the process running.
         """
@@ -72,7 +75,7 @@ class ControlledProcess(LogOwner, ABC):
 
     #################### PRIVATE HELPER FUNCTIONS ####################
 
-    def _print_still_alive(self):
+    def _print_still_alive(self) -> None:
         # print the "still alive" character
         if (
             self.__update_secs != -1
@@ -82,7 +85,7 @@ class ControlledProcess(LogOwner, ABC):
             self.logger.debug(".")
             self.__last_update = datetime.datetime.now()
 
-    def _check_control_command_queue(self):
+    def _check_control_command_queue(self) -> None:
         # if anything exists in the control command queue
         try:
             cmd = self.control_command_queue.get(block=True, timeout=0.05)
@@ -99,7 +102,7 @@ class ControlledProcess(LogOwner, ABC):
     #################### ABSTRACT METHODS ####################
 
     @abstractmethod
-    def run(self):
+    def run(self) -> None:
         """
         Classes extending this base class should include the logic of actually
         running the controlled process in this function, and should call super().run()
@@ -109,7 +112,7 @@ class ControlledProcess(LogOwner, ABC):
         self.__last_update = datetime.datetime.now()
 
     @abstractmethod
-    def _on_check(self):
+    def _on_check(self) -> None:
         """
         This function is run when the "check" command is found in the control queue.
 
@@ -118,7 +121,7 @@ class ControlledProcess(LogOwner, ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def _on_shutdown(self):
+    def _on_shutdown(self) -> None:
         """
         This function is run when the process is stopped; it's called from :func:`~shutdown`.
 
