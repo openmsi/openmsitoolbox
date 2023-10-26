@@ -7,7 +7,8 @@ import sys
 import select
 import asyncio
 from abc import ABC, abstractmethod
-from openmsitoolbox import LogOwner, OpenMSIArgumentParser
+from ..logging.log_owner import LogOwner
+from ..argument_parsing.openmsi_argument_parser import OpenMSIArgumentParser
 
 
 class ControlledProcessAsync(LogOwner, ABC):
