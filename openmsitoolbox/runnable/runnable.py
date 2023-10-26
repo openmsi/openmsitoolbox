@@ -7,7 +7,7 @@ Defining the general OpenMSI workflow for running from the command line
 from typing import List
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser
-from .. import OpenMSIArgumentParser
+from ..argument_parsing.openmsi_argument_parser import OpenMSIArgumentParser
 from ..argument_parsing.has_arguments import HasArguments
 from ..argument_parsing.has_argument_parser import HasArgumentParser
 
