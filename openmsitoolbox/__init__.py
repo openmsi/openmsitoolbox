@@ -8,6 +8,7 @@ from .controlled_process.controlled_process_single_thread import (
 from .controlled_process.controlled_process_multi_threaded import (
     ControlledProcessMultiThreaded,
 )
+from .controlled_process.controlled_process_async import ControlledProcessAsync
 from .version import __version__
 
 __all__ = [
@@ -17,4 +18,5 @@ __all__ = [
     "Runnable",
     "ControlledProcessSingleThread",
     "ControlledProcessMultiThreaded",
+    "ControlledProcessAsync",
 ]
