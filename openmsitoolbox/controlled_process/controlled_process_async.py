@@ -81,7 +81,7 @@ class ControlledProcessAsync(LogOwner, ABC):
         while self.__alive:
             await asyncio.sleep(1)
             rlist, _, _ = select.select([sys.stdin], [], [], 0)
-            if rlist!=[]:
+            if rlist != []:
                 await self.control_command_queue.put((sys.stdin.read(1)).strip())
 
     async def _print_still_alive(self):
