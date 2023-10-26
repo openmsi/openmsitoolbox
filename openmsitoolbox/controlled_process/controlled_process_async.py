@@ -24,7 +24,7 @@ class ControlledProcessAsync(LogOwner, ABC):
     #################### PROPERTIES ####################
 
     @property
-    def alive(self):
+    def alive(self) -> bool:
         """
         Read-only boolean indicating if the process is running
         """
@@ -37,7 +37,7 @@ class ControlledProcessAsync(LogOwner, ABC):
         *args,
         update_secs: int = OpenMSIArgumentParser.DEF_UPDATE_SECS,
         **other_kwargs
-    ):
+    ) -> None:
         self.__update_secs = update_secs
         # a variable to indicate if the process has been shut down yet
         self.__alive = False
@@ -46,7 +46,7 @@ class ControlledProcessAsync(LogOwner, ABC):
         self.control_command_queue = None
         super().__init__(*args, **other_kwargs)
 
-    async def run_loop(self):
+    async def run_loop(self) -> None:
         """Concurrently get user input, process user input, print the "still alive"
         character, and run the "run" function until the process is shut down. This
         is the main function that child classes should call.
@@ -66,7 +66,7 @@ class ControlledProcessAsync(LogOwner, ABC):
             task.cancel()
         await self._post_run()
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         """
         Stop the process running.
         """
@@ -75,7 +75,7 @@ class ControlledProcessAsync(LogOwner, ABC):
 
     #################### PRIVATE HELPER FUNCTIONS ####################
 
-    async def _add_user_input(self):
+    async def _add_user_input(self) -> None:
         """
         Listen for and add user input to a queue at one second intervals
         """
@@ -85,7 +85,7 @@ class ControlledProcessAsync(LogOwner, ABC):
             if rlist != []:
                 await self.control_command_queue.put((sys.stdin.read(1)).strip())
 
-    async def _print_still_alive(self):
+    async def _print_still_alive(self) -> None:
         # print the "still alive" character
         if self.__update_secs == -1:
             return
@@ -93,7 +93,7 @@ class ControlledProcessAsync(LogOwner, ABC):
             await asyncio.sleep(self.__update_secs)
             self.logger.debug(".")
 
-    async def _handle_control_commands(self):
+    async def _handle_control_commands(self) -> None:
         while self.__alive:
             # get anything from the control command queue
             cmd = await self.control_command_queue.get()
@@ -104,7 +104,7 @@ class ControlledProcessAsync(LogOwner, ABC):
                     self._on_check()
                 # otherwise just skip this unrecognized command
 
-    async def _post_run(self):
+    async def _post_run(self) -> None:
         """This function is called after all the tasks have been shut down, to perform
         any final cleanup.
 
@@ -115,7 +115,7 @@ class ControlledProcessAsync(LogOwner, ABC):
     #################### ABSTRACT METHODS ####################
 
     @abstractmethod
-    async def run_task(self):
+    async def run_task(self) -> None:
         """
         Classes extending this base class should include the logic of actually
         running the controlled process in this function. It should include a
@@ -127,7 +127,7 @@ class ControlledProcessAsync(LogOwner, ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def _on_check(self):
+    def _on_check(self) -> None:
         """
         This function is run when the "check" command is found in the control queue.
 
@@ -136,7 +136,7 @@ class ControlledProcessAsync(LogOwner, ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def _on_shutdown(self):
+    def _on_shutdown(self) -> None:
         """
         This function is run when the process is stopped; it's called from :func:`~shutdown`.
 

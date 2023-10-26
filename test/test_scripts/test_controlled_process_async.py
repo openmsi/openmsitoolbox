@@ -1,4 +1,4 @@
-"""Testing controlled processes"""
+"""Testing the async controlled process"""
 
 import unittest
 import asyncio
