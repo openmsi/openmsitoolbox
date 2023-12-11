@@ -56,7 +56,7 @@ class OpenMSIArgumentParser(ArgumentParser):
             "optional",
             {
                 "type": pathlib.Path,
-                "help": "A path to an alternate log file (instead of various defaults)."
+                "help": "A path to an alternate log file (instead of various defaults).",
             },
         ],
         "filepath": [
