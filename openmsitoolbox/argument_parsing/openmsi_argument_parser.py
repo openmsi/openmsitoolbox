@@ -1,6 +1,7 @@
 """Custom argument parser and associated functions"""
 
 # imports
+import pathlib
 from argparse import ArgumentParser, Action
 from typing import Any, Dict, List, Tuple, Type, TYPE_CHECKING
 from .parser_callbacks import (
@@ -49,6 +50,13 @@ class OpenMSIArgumentParser(ArgumentParser):
                 "help": (
                     "Messages below this level will not be processed by the logger's file handler"
                 ),
+            },
+        ],
+        "logger_file_path": [
+            "optional",
+            {
+                "type": pathlib.Path,
+                "help": "A path to an alternate log file (instead of various defaults).",
             },
         ],
         "filepath": [

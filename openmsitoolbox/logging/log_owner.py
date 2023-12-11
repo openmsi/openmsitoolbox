@@ -68,7 +68,7 @@ class LogOwner(HasArguments):
                 logger_name = self.__class__.__name__
             logger_filepath = logger_file
             if logger_file is not None and logger_file.is_dir():
-                logger_filepath = logger_file / f"{self.__class__.__name__}.log"
+                logger_filepath = logger_file / f"{logger_name}.log"
             self.__logger = OpenMSILogger(
                 logger_name, streamlevel, logger_filepath, filelevel
             )
@@ -80,4 +80,10 @@ class LogOwner(HasArguments):
         Return the names of arguments for the logger stream and file levels.
         """
         superargs, superkwargs = super().get_command_line_arguments()
-        return [*superargs, "logger_stream_level", "logger_file_level"], superkwargs
+        args = [
+            *superargs,
+            "logger_stream_level",
+            "logger_file_level",
+            "logger_file_path",
+        ]
+        return args, superkwargs
