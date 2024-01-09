@@ -1,6 +1,7 @@
 " Anything that owns an OpenMSILogger "
 
 # imports
+from argparse import Namespace
 import logging
 import pathlib
 from typing import Any, Dict, List, Tuple
@@ -83,7 +84,20 @@ class LogOwner(HasArguments):
         args = [
             *superargs,
             "logger_stream_level",
-            "logger_file_level",
             "logger_file_path",
+            "logger_file_level",
         ]
         return args, superkwargs
+
+    @classmethod
+    def get_init_args_kwargs(
+        cls, parsed_args: Namespace
+    ) -> Tuple[List[str], Dict[str, Any]]:
+        superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
+        kwargs = {
+            **superkwargs,
+            "streamlevel": parsed_args.logger_stream_level,
+            "logger_file": parsed_args.logger_file_path,
+            "filelevel": parsed_args.logger_file_level,
+        }
+        return superargs, kwargs

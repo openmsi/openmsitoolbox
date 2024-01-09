@@ -4,6 +4,7 @@ also extends Runnable
 """
 
 # imports
+from argparse import Namespace
 from abc import ABC, abstractmethod
 from typing import List, Dict, Tuple, Any
 
@@ -30,7 +31,9 @@ class HasArguments(ABC):
 
     @classmethod
     @abstractmethod
-    def get_init_args_kwargs(cls, parsed_args) -> Tuple[List[str], Dict[str, Any]]:
+    def get_init_args_kwargs(
+        cls, parsed_args: Namespace
+    ) -> Tuple[List[str], Dict[str, Any]]:
         """Get the list of init arguments and the dictionary of init keyword arguments
         for this class given a namespace of, for example, parsed arguments.
 
