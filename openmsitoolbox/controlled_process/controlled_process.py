@@ -3,12 +3,14 @@ A process that will run while waiting for user input to check progress/status or
 """
 
 # imports
+from argparse import Namespace
 import time
 import sys
 import datetime
 from queue import Queue, Empty
 from threading import Thread
 from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Tuple
 from ..logging.log_owner import LogOwner
 from ..argument_parsing.openmsi_argument_parser import OpenMSIArgumentParser
 
@@ -98,6 +100,25 @@ class ControlledProcess(LogOwner, ABC):
                 self._on_check()
             else:  # otherwise just skip this unrecognized command
                 self._check_control_command_queue()
+
+    #################### CLASS METHODS ####################
+
+    @classmethod
+    def get_command_line_arguments(cls) -> Tuple[List[str], Dict[str, Any]]:
+        superargs, superkwargs = super().get_command_line_arguments()
+        args = [*superargs, "update_seconds"]
+        return args, superkwargs
+
+    @classmethod
+    def get_init_args_kwargs(
+        cls, parsed_args: Namespace
+    ) -> Tuple[List[str], Dict[str, Any]]:
+        superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
+        kwargs = {
+            **superkwargs,
+            "update_secs": parsed_args.update_seconds,
+        }
+        return superargs, kwargs
 
     #################### ABSTRACT METHODS ####################
 

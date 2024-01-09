@@ -1,7 +1,8 @@
 " A ControlledProcess running with more than one thread "
 
 # imports
-from typing import Any, List, Dict, Union
+from argparse import Namespace
+from typing import Any, List, Dict, Union, Tuple
 from threading import Lock
 from abc import ABC, abstractmethod
 from ..utilities.exception_tracking_thread import ExceptionTrackingThread
@@ -143,3 +144,20 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
                     kwargs=self.__kwargs_per_thread[ti],
                 )
                 self.__threads[ti].start()
+
+    @classmethod
+    def get_command_line_arguments(cls) -> Tuple[List[str], Dict[str, Any]]:
+        superargs, superkwargs = super().get_command_line_arguments()
+        args = [*superargs, "n_threads"]
+        return args, superkwargs
+
+    @classmethod
+    def get_init_args_kwargs(
+        cls, parsed_args: Namespace
+    ) -> Tuple[List[str], Dict[str, Any]]:
+        superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
+        kwargs = {
+            **superkwargs,
+            "n_threads": parsed_args.n_threads,
+        }
+        return superargs, kwargs

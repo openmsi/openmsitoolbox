@@ -3,10 +3,12 @@ progress/status or shut it down
 """
 
 # imports
+from argparse import Namespace
 import sys
 import select
 import asyncio
 from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Tuple
 from ..logging.log_owner import LogOwner
 from ..argument_parsing.openmsi_argument_parser import OpenMSIArgumentParser
 
@@ -111,6 +113,25 @@ class ControlledProcessAsync(LogOwner, ABC):
         Does nothing in the base class
         """
         return
+
+    #################### CLASS METHODS ####################
+
+    @classmethod
+    def get_command_line_arguments(cls) -> Tuple[List[str], Dict[str, Any]]:
+        superargs, superkwargs = super().get_command_line_arguments()
+        args = [*superargs, "update_seconds"]
+        return args, superkwargs
+
+    @classmethod
+    def get_init_args_kwargs(
+        cls, parsed_args: Namespace
+    ) -> Tuple[List[str], Dict[str, Any]]:
+        superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
+        kwargs = {
+            **superkwargs,
+            "update_secs": parsed_args.update_seconds,
+        }
+        return superargs, kwargs
 
     #################### ABSTRACT METHODS ####################
 
