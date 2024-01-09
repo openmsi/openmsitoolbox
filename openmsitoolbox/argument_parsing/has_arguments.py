@@ -27,13 +27,13 @@ class HasArguments(ABC):
         :rtype: dict
         """
         return [], {}
-    
+
     @classmethod
     @abstractmethod
     def get_init_args_kwargs(cls, parsed_args) -> Tuple[List[str], Dict[str, Any]]:
         """Get the list of init arguments and the dictionary of init keyword arguments
         for this class given a namespace of, for example, parsed arguments.
-        
+
         :param parsed_args: A namespace containing entries needed to determine the init
             args and kwargs for this class
         :type parsed_args: argparse.Namespace
