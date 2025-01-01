@@ -40,6 +40,9 @@ class OpenMSILogger:
         filelevel: str = logging.WARNING,
         conf_global_logger: bool = True,
     ) -> None:
+        """
+        name = the name for this logger to use (probably something like the top module that owns it)
+        """
         # set global logging level if requested. We use the lower number (more verbose) as default
         self.level = min(streamlevel,filelevel)
         if conf_global_logger:
@@ -47,9 +50,6 @@ class OpenMSILogger:
             logging.basicConfig(level=self.level)
             # This line ensures a default level on the root logger if logger has been used
             logging.getLogger().setLevel(self.level)
-        """
-        name = the name for this logger to use (probably something like the top module that owns it)
-        """
         self._name = logger_name
         if self._name is None:
             self._name = self.__class__.__name__
@@ -64,7 +64,11 @@ class OpenMSILogger:
             self.add_file_handler(logger_filepath, level=filelevel)
         if conf_global_logger:
             # override warnings output via us
-            warnings.showwarning = lambda message, category, filename, lineno, f=None, line=None: self._logger_obj.warning(warnings.formatwarning(message, category, filename, lineno))
+            warnings.showwarning = \
+                lambda message, category, filename, lineno, f=None, line=None: \
+                self._logger_obj.warning(
+                    warnings.formatwarning(message, category, filename, lineno)
+                )
 
     def set_level(self, level: int) -> None:
         """
