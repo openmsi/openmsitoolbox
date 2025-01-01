@@ -21,6 +21,8 @@ class OpenMSILogger:
     :type logger_filepath: :class:`pathlib.Path`, optional
     :param filelevel: The level at/above which messages should be written to the logfile
     :type filelevel: logging level int, optional
+    :param conf_global_logger: Whether to configure global loggers or not (Default: True)
+    :type conf_global_logger: bool, optional
     """
 
     FORMATTER = OpenMSIFormatter(
@@ -33,7 +35,14 @@ class OpenMSILogger:
         streamlevel: int = logging.INFO,
         logger_filepath: pathlib.Path = None,
         filelevel: str = logging.WARNING,
+        conf_global_logger: bool = True,
     ) -> None:
+        # set global logging level if requested. We use the lower number (more verbose) as default
+        if conf_global_logger:
+            # This line ensures a default level if logger hasnt yet been used
+            logging.basicConfig(level=min(streamlevel,filelevel))
+            # This line ensures a default level on the root logger if logger has been used
+            logging.getLogger().setLevel(min(streamlevel,filelevel))
         """
         name = the name for this logger to use (probably something like the top module that owns it)
         """
