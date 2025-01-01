@@ -29,6 +29,8 @@ class OpenMSILogger:
         "[%(name)s %(asctime)s] %(message)s", "%Y-%m-%d %H:%M:%S"
     )
 
+    level = logging.NOTSET
+
     def __init__(
         self,
         logger_name: str = None,
@@ -38,11 +40,12 @@ class OpenMSILogger:
         conf_global_logger: bool = True,
     ) -> None:
         # set global logging level if requested. We use the lower number (more verbose) as default
+        self.level = min(streamlevel,filelevel)
         if conf_global_logger:
             # This line ensures a default level if logger hasnt yet been used
-            logging.basicConfig(level=min(streamlevel,filelevel))
+            logging.basicConfig(level=self.level)
             # This line ensures a default level on the root logger if logger has been used
-            logging.getLogger().setLevel(min(streamlevel,filelevel))
+            logging.getLogger().setLevel(self.level)
         """
         name = the name for this logger to use (probably something like the top module that owns it)
         """
