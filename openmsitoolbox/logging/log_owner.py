@@ -73,7 +73,8 @@ class LogOwner(HasArguments):
             self.__logger = OpenMSILogger(
                 logger_name, streamlevel, logger_filepath, filelevel
             )
-        super().__init__(*args, **other_kwargs)
+        # super().__init__(*args, **other_kwargs)
+        super().__init__()
 
     @classmethod
     def get_command_line_arguments(cls) -> Tuple[List[str], Dict[str, Any]]:
