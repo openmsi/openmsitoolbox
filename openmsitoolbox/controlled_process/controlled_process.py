@@ -49,16 +49,14 @@ class ControlledProcess(LogOwner, ABC):
         self,
         *args,
         update_secs: int = OpenMSIArgumentParser.DEF_UPDATE_SECS,
-        **other_kwargs
+        **other_kwargs,
     ) -> None:
         self.__update_secs = update_secs
         # start up a Queue that will hold the control commands
         self.control_command_queue = Queue()
         # use a daemon thread to allow a user to input control commands from the command line
         # while the process is running
-        user_input_thread = Thread(
-            target=add_user_input, args=(self.control_command_queue,)
-        )
+        user_input_thread = Thread(target=add_user_input, args=(self.control_command_queue,))
         user_input_thread.daemon = True
         user_input_thread.start()
         # a variable to indicate if the process has been shut down yet
@@ -81,8 +79,7 @@ class ControlledProcess(LogOwner, ABC):
         # print the "still alive" character
         if (
             self.__update_secs != -1
-            and (datetime.datetime.now() - self.__last_update).total_seconds()
-            > self.__update_secs
+            and (datetime.datetime.now() - self.__last_update).total_seconds() > self.__update_secs
         ):
             self.logger.debug(".")
             self.__last_update = datetime.datetime.now()
@@ -110,9 +107,7 @@ class ControlledProcess(LogOwner, ABC):
         return args, superkwargs
 
     @classmethod
-    def get_init_args_kwargs(
-        cls, parsed_args: Namespace
-    ) -> Tuple[List[str], Dict[str, Any]]:
+    def get_init_args_kwargs(cls, parsed_args: Namespace) -> Tuple[List[str], Dict[str, Any]]:
         superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
         kwargs = {
             **superkwargs,

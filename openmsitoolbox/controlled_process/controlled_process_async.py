@@ -38,7 +38,7 @@ class ControlledProcessAsync(LogOwner, ABC):
         self,
         *args,
         update_secs: int = OpenMSIArgumentParser.DEF_UPDATE_SECS,
-        **other_kwargs
+        **other_kwargs,
     ) -> None:
         self.__update_secs = update_secs
         # a variable to indicate if the process has been shut down yet
@@ -123,9 +123,7 @@ class ControlledProcessAsync(LogOwner, ABC):
         return args, superkwargs
 
     @classmethod
-    def get_init_args_kwargs(
-        cls, parsed_args: Namespace
-    ) -> Tuple[List[str], Dict[str, Any]]:
+    def get_init_args_kwargs(cls, parsed_args: Namespace) -> Tuple[List[str], Dict[str, Any]]:
         superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
         kwargs = {
             **superkwargs,

@@ -1,4 +1,4 @@
-" Constants used in testing "
+"Constants used in testing"
 
 # imports
 import pathlib
@@ -15,7 +15,7 @@ class TestRoutineConstants:
     TEST_DATA_DIR_PATH = TEST_DIR_PATH / "data"
     # Version tag to use for separating output locations, consumer group IDs, etc.
     # for concurrently-running tests
-    PY_VERSION = f"python_{sys.version.split()[0].replace('.','_')}"
+    PY_VERSION = f"python_{sys.version.split()[0].replace('.','_')}"  # pylint: disable=W1405
 
 
 TESTING_CONST = TestRoutineConstants()

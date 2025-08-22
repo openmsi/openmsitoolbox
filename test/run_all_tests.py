@@ -1,4 +1,4 @@
-" Run all of the unittests plus some linting and formatting checks "
+"Run all of the unittests plus some linting and formatting checks"
 
 # imports
 import unittest
@@ -65,7 +65,8 @@ def test_pyflakes(args):
     else:
         LOGGER.info("testing code consistency with pyflakes...")
         cmd = (
-            f"cd {TOP_DIR_PATH}; pyflakes .; cd {TEST_DIR_PATH}; pyflakes.; "
+            f"cd {TOP_DIR_PATH}; pyflakes openmsitoolbox setup.py; "
+            f"cd {TEST_DIR_PATH}; pyflakes.; "
             f"cd {CWD}; exit 0"
         )
         with subprocess.Popen(
@@ -121,7 +122,9 @@ def test_pylint(args):
     else:
         LOGGER.info("testing code consistency with pylint...")
         cmd = (
-            f"cd {TOP_DIR_PATH}; pylint openmsitoolbox; pylint --recursive=y test; "
+            f"cd {TOP_DIR_PATH}; "
+            "pylint openmsitoolbox --ignore version.py; "
+            "pylint --recursive=y test; "
             f"cd {CWD}; exit 0"
         )
         with subprocess.Popen(
@@ -188,9 +191,7 @@ def run_script_tests(args):
         result = runner.run(suites)
         # check for any errors or failures
         if len(result.errors) > 0 or len(result.failures) > 0:
-            raise RuntimeError(
-                "ERROR: some test(s) failed! See output above for details."
-            )
+            raise RuntimeError("ERROR: some test(s) failed! See output above for details.")
         LOGGER.info("All script tests complete : )")
 
 

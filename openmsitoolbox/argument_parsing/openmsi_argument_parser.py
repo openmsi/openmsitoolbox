@@ -209,9 +209,7 @@ class OpenMSIArgumentParser(ArgumentParser):
                 self.add_argument(argname_to_add, **kwargs_for_arg)
                 self.__argnames_added.append(argname_to_add)
         for argname, argdefault in kwargs.items():
-            argname_to_add, kwargs_for_arg = self.__get_argname_and_kwargs(
-                argname, argdefault
-            )
+            argname_to_add, kwargs_for_arg = self.__get_argname_and_kwargs(argname, argdefault)
             if argname_to_add not in self.__argnames_added:
                 self.add_argument(argname_to_add, **kwargs_for_arg)
                 self.__argnames_added.append(argname_to_add)
@@ -260,19 +258,13 @@ class OpenMSIArgumentParser(ArgumentParser):
             for argname in args_to_add:
                 argname_to_add, kwargs_for_arg = self.__get_argname_and_kwargs(argname)
                 if argname_to_add not in self.__subparser_argnames_added[subp_name]:
-                    self.__subparsers[subp_name].add_argument(
-                        argname_to_add, **kwargs_for_arg
-                    )
+                    self.__subparsers[subp_name].add_argument(argname_to_add, **kwargs_for_arg)
                     self.__subparser_argnames_added[subp_name].append(argname_to_add)
         if kwargs_to_add is not None:
             for argname, argdefault in kwargs_to_add.items():
-                argname_to_add, kwargs_for_arg = self.__get_argname_and_kwargs(
-                    argname, argdefault
-                )
+                argname_to_add, kwargs_for_arg = self.__get_argname_and_kwargs(argname, argdefault)
                 if argname_to_add not in self.__subparser_argnames_added[subp_name]:
-                    self.__subparsers[subp_name].add_argument(
-                        argname_to_add, **kwargs_for_arg
-                    )
+                    self.__subparsers[subp_name].add_argument(argname_to_add, **kwargs_for_arg)
                     self.__subparser_argnames_added[subp_name].append(argname_to_add)
 
     def add_subparser_arguments_from_class(
@@ -310,9 +302,7 @@ class OpenMSIArgumentParser(ArgumentParser):
             argnames = [*argnames, *addl_args]
         if addl_kwargs is not None:
             argnames_with_defaults = {**argnames_with_defaults, **addl_kwargs}
-        self.add_subparser_arguments(
-            subp_name, argnames, argnames_with_defaults, **other_kwargs
-        )
+        self.add_subparser_arguments(subp_name, argnames, argnames_with_defaults, **other_kwargs)
 
     def __get_argname_and_kwargs(
         self, argname: str, new_default: Any = None
@@ -345,9 +335,9 @@ class OpenMSIArgumentParser(ArgumentParser):
                 kwargs["default"] = new_default
             if "default" in kwargs.keys():
                 if "help" in kwargs.keys():
-                    kwargs["help"] += f" (default = {kwargs['default']})"
+                    kwargs["help"] += f" (default = {kwargs['default']})"  # pylint: disable=W1405
                 else:
-                    kwargs["help"] = f"default = {kwargs['default']}"
+                    kwargs["help"] = f"default = {kwargs['default']}"  # pylint: disable=W1405
             return argname_to_add, kwargs
         raise ValueError(f"ERROR: argument {argname} is not recognized as an option!")
 

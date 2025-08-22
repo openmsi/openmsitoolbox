@@ -1,4 +1,4 @@
-" A controlled process that is only running in a single thread "
+"A controlled process that is only running in a single thread"
 
 # imports
 from abc import ABC, abstractmethod

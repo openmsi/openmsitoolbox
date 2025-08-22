@@ -1,4 +1,4 @@
-" A Thread that re-raises any Exceptions encountered during running when it is join()ed "
+"A Thread that re-raises any Exceptions encountered during running when it is join()ed"
 
 # imports
 from threading import Thread

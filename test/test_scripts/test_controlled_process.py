@@ -1,4 +1,4 @@
-" Tests for the 'ControlledProcess' classes "
+"Tests for the 'ControlledProcess' classes"
 
 # imports
 import unittest
@@ -111,9 +111,7 @@ class TestControlledProcess(unittest.TestCase):
         """
         Test the multi-threaded controlled process
         """
-        cpmt = ControlledProcessMultiThreadedForTesting(
-            n_threads=N_THREADS, update_secs=5
-        )
+        cpmt = ControlledProcessMultiThreadedForTesting(n_threads=N_THREADS, update_secs=5)
         self.assertEqual(cpmt.counter, 0)
         run_thread = ExceptionTrackingThread(target=cpmt.run)
         run_thread.start()
@@ -144,8 +142,6 @@ class TestControlledProcess(unittest.TestCase):
                     cpmt.shutdown()
                     run_thread.join(timeout=5)
                     if run_thread.is_alive():
-                        raise TimeoutError(
-                            "ERROR: running thread timed out after 5 seconds!"
-                        )
+                        raise TimeoutError("ERROR: running thread timed out after 5 seconds!")
                 except Exception as exc:
                     raise exc

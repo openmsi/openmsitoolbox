@@ -16,6 +16,11 @@ dependencies = []
 keywords = ["materials", "data_science"]
 classifiers = [
     "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
 ]
 
@@ -42,6 +47,9 @@ all = [
     "requests",
     "twine",
 ]
+
+[tool.black]
+line-length = 100
 
 [tool.setuptools]
 include-package-data = true
