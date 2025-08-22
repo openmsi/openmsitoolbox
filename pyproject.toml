@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=80", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openmsitoolbox"
+dynamic = ["version"]
+description = "Python utilities for OpenMSI projects Developed for Open MSI (NSF DMREF award #1921959)"
+readme = "README.md"
+authors = [
+    {name = "OpenMSI Dev Team", email = "openmsistream@gmail.com"}
+]
+license = "GPL-3.0-or-later"
+requires-python = ">=3.7"
+dependencies = []
+keywords = ["materials", "data_science"]
+classifiers = [
+    "Programming Language :: Python :: 3.7",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/openmsi/openmsitoolbox"
+Download = "https://github.com/openmsi/openmsitoolbox/archive/refs/heads/main.tar.gz"
+
+[project.optional-dependencies]
+test = [
+    "black",
+    "packaging",
+    "pyflakes",
+    "pylint",
+    "requests",
+]
+dev = [
+    "twine",
+]
+all = [
+    "black",
+    "packaging",
+    "pyflakes",
+    "pylint",
+    "requests",
+    "twine",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["openmsitoolbox*"]
+
+[tool.setuptools_scm]
+version_file = "openmsitoolbox/version.py"
