@@ -33,7 +33,8 @@ setupkwargs = {
     "author_email":"openmsistream@gmail.com",
     "url":"https://github.com/openmsi/openmsitoolbox",
     "download_url":f"https://github.com/openmsi/openmsitoolbox/archive/refs/tags/v{VERSION}.tar.gz",
-    license_files=["LICENSE"],
+    "license":"GNU GPLv3",
+    "license_files":["LICENSE"],
     "python_requires":">=3.7",
     "install_requires":[],
     "extras_require":{
