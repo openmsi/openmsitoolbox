@@ -35,7 +35,7 @@ jobs:
       - name: Build and Publish to PyPI
         if: env.EXISTS == 'false'
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}  # token must start with "pypi-"
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.   }}  # token must start with "pypi-"
         run: |
           poetry build
           poetry publish --no-interaction
