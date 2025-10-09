@@ -1,4 +1,4 @@
-name: Publish to PyPI
+name: Test and Publish to PyPI
 
 on:
   push:
@@ -6,7 +6,35 @@ on:
       - "v*"
 
 jobs:
+  format-lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: pip install .["test"]
+    - name: Format code with Black
+      run: |
+        black openmsitoolbox --check
+        black test --check
+    - name: Check code with pyflakes
+      run: |
+        pyflakes .
+        cd test
+        pyflakes .
+        cd ..
+    - name: Lint code with pylint
+      run: |
+        pylint openmsitoolbox
+        pylint --recursive=y test
+    - name: Run tests with unittest
+      run: python -m unittest discover test/test_scripts
   pypi-release:
+    needs: format-lint-and-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
