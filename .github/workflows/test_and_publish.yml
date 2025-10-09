@@ -36,7 +36,7 @@ jobs:
         poetry run pylint openmsitoolbox
         poetry run pylint --recursive=y test
     - name: Run tests with unittest
-      run: poetry python -m unittest discover test/test_scripts
+      run: poetry run python -m unittest discover test/test_scripts
   pypi-release:
     needs: format-lint-and-test
     runs-on: ubuntu-latest
