@@ -14,9 +14,9 @@ packages = [{ include = "openmsitoolbox" }]
 python = ">=3.7"
 
 [tool.poetry.extras]
-test = ["black", "packaging", "pyflakes", "pylint", "requests"]
+test = ["black", "packaging", "pyflakes", "pylint", "requests", "poetry"]
 dev = ["twine"]
-all = ["black", "packaging", "pyflakes", "pylint", "requests", "twine"]
+all = ["black", "packaging", "pyflakes", "pylint", "requests", "twine", "poetry"]
 
 [build-system]
 requires = ["poetry-core"]
