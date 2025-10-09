@@ -23,8 +23,8 @@ jobs:
       run: poetry install --with test
     - name: Format code with Black
       run: |
-        poetry run black openmsitoolbox 
-        poetry run black test 
+        poetry run black openmsitoolbox --check
+        poetry run black test --check
     - name: Check code with pyflakes
       run: |
         poetry run pyflakes .
