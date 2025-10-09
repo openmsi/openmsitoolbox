@@ -13,9 +13,6 @@ packages = [{ include = "openmsitoolbox" }]
 [tool.poetry.dependencies]
 python = ">=3.7"
 
-[tool.pylint.'MESSAGES CONTROL']
-disable = ["C0301"]
-
 [tool.poetry.group.test.dependencies]
 black = "*"
 pyflakes = "*"
