@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openmsitoolbox"
-version = "1.2.5.dev1"
+version = "1.2.5.dev2"
 description = "Python utilities for OpenMSI projects. Developed for Open MSI (NSF DMREF award #1921959)."
 authors = ["OpenMSI Dev Team <openmsistream@gmail.com>"]
 license = "GPL-3.0"
@@ -14,9 +14,9 @@ packages = [{ include = "openmsitoolbox" }]
 python = ">=3.7"
 
 [tool.poetry.extras]
-test = ["black", "packaging", "pyflakes", "pylint", "requests", "poetry"]
+test = ["black", "packaging", "pyflakes", "pylint", "requests"]
 dev = ["twine"]
-all = ["black", "packaging", "pyflakes", "pylint", "requests", "twine", "poetry"]
+all = ["black", "packaging", "pyflakes", "pylint", "requests", "twine"]
 
 [build-system]
 requires = ["poetry-core"]
