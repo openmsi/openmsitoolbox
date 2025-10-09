@@ -64,8 +64,7 @@ class OpenMSILogger:
             self.add_file_handler(logger_filepath, level=filelevel)
         if conf_global_logger:
             # override warnings output via us
-            warnings.showwarning = lambda message, category, filename, lineno, \
-                 f=None, line=None: self._logger_obj.warning( \
+            warnings.showwarning = lambda message, category, filename, lineno, f=None, line=None: self._logger_obj.warning(
                 warnings.formatwarning(message, category, filename, lineno)
             )
 
