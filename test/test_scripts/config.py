@@ -1,4 +1,4 @@
-" Constants used in running tests "
+"Constants used in running tests"
 
 # imports
 import pathlib

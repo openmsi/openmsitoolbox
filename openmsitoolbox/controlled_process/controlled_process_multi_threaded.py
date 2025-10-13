@@ -1,4 +1,4 @@
-" A ControlledProcess running with more than one thread "
+"A ControlledProcess running with more than one thread"
 
 # imports
 from argparse import Namespace
@@ -18,9 +18,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
     """
 
     DEF_N_THREADS = 2
-    SHUTDOWN_THREAD_TIMEOUT = (
-        10  # time in seconds to wait for threads to join in shutdown
-    )
+    SHUTDOWN_THREAD_TIMEOUT = 10  # time in seconds to wait for threads to join in shutdown
 
     def __init__(self, *args, n_threads: int = DEF_N_THREADS, **kwargs):
         self.n_threads = n_threads
@@ -51,9 +49,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
         # correct the arguments for each thread
         if args_per_thread is not None:
             self.__args_per_thread = args_per_thread
-        if self.__args_per_thread == [] or (
-            not isinstance(self.__args_per_thread, list)
-        ):
+        if self.__args_per_thread == [] or (not isinstance(self.__args_per_thread, list)):
             self.__args_per_thread = [self.__args_per_thread]
         if not len(self.__args_per_thread) == self.n_threads:
             if not len(self.__args_per_thread) == 1:
@@ -152,9 +148,7 @@ class ControlledProcessMultiThreaded(ControlledProcess, ABC):
         return args, superkwargs
 
     @classmethod
-    def get_init_args_kwargs(
-        cls, parsed_args: Namespace
-    ) -> Tuple[List[str], Dict[str, Any]]:
+    def get_init_args_kwargs(cls, parsed_args: Namespace) -> Tuple[List[str], Dict[str, Any]]:
         superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
         kwargs = {
             **superkwargs,

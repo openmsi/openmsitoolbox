@@ -1,4 +1,4 @@
-" Testing the argument_parsing functions and classes "
+"Testing the argument_parsing functions and classes"
 
 # imports
 import pathlib
@@ -83,9 +83,7 @@ class TestArgumentParsing(TestWithOutputLocation):
         self.assertEqual(existing_dir(self.output_dir), self.output_dir)
         output_dir_path_str = str(self.output_dir)
         self.assertEqual(existing_dir(output_dir_path_str), self.output_dir)
-        does_not_exist_dir_path = (
-            self.output_dir / "never_make_a_directory_called_this"
-        ).resolve()
+        does_not_exist_dir_path = (self.output_dir / "never_make_a_directory_called_this").resolve()
         self.assertFalse(does_not_exist_dir_path.is_dir())
         with self.assertRaises(FileNotFoundError):
             _ = existing_dir(does_not_exist_dir_path)

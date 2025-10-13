@@ -1,4 +1,4 @@
-" OpenMSI-configured logger "
+"OpenMSI-configured logger"
 
 # imports
 import logging
@@ -26,13 +26,11 @@ class OpenMSILogger:
     :type conf_global_logger: bool, optional
     """
 
-    FORMATTER = OpenMSIFormatter(
-        "[%(name)s %(asctime)s] %(message)s", "%Y-%m-%d %H:%M:%S"
-    )
+    FORMATTER = OpenMSIFormatter("[%(name)s %(asctime)s] %(message)s", "%Y-%m-%d %H:%M:%S")
 
     level = logging.NOTSET
 
-    def __init__(
+    def __init__(  # pylint: disable=R0917
         self,
         logger_name: str = None,
         streamlevel: int = logging.INFO,
@@ -64,9 +62,18 @@ class OpenMSILogger:
             self.add_file_handler(logger_filepath, level=filelevel)
         if conf_global_logger:
             # override warnings output via us
-            warnings.showwarning = lambda message, category, filename, lineno, f=None, line=None: self._logger_obj.warning(
-                warnings.formatwarning(message, category, filename, lineno)
+            # fmt: off
+            warnings.showwarning = (
+                lambda message,
+                category,
+                filename,
+                lineno,
+                f=None,
+                line=None: self._logger_obj.warning(  # black ignore
+                    warnings.formatwarning(message, category, filename, lineno)
+                )
             )
+            # fmt: on
 
     def set_level(self, level: int) -> None:
         """
@@ -109,9 +116,7 @@ class OpenMSILogger:
             raise RuntimeError(errmsg)
         self._filehandler.setLevel(level)
 
-    def add_file_handler(
-        self, filepath: pathlib.Path, level: int = logging.INFO
-    ) -> None:
+    def add_file_handler(self, filepath: pathlib.Path, level: int = logging.INFO) -> None:
         """
         Add an additional :class:`logging.FileHandler` to the logger
 
@@ -194,11 +199,7 @@ class OpenMSILogger:
         if not msg.startswith("ERROR:"):
             msg = f"ERROR: {msg}"
         self._logger_obj.error(msg, **kwargs)
-        if (
-            reraise
-            and ("exc_info" in kwargs)
-            and isinstance(kwargs["exc_info"], Exception)
-        ):
+        if reraise and ("exc_info" in kwargs) and isinstance(kwargs["exc_info"], Exception):
             raise kwargs["exc_info"]
         if exc_type is not None:
             raise exc_type(msg)

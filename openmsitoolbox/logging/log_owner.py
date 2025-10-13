@@ -1,4 +1,4 @@
-" Anything that owns an OpenMSILogger "
+"Anything that owns an OpenMSILogger"
 
 # imports
 from argparse import Namespace
@@ -70,9 +70,7 @@ class LogOwner(HasArguments):
             logger_filepath = logger_file
             if logger_file is not None and logger_file.is_dir():
                 logger_filepath = logger_file / f"{logger_name}.log"
-            self.__logger = OpenMSILogger(
-                logger_name, streamlevel, logger_filepath, filelevel
-            )
+            self.__logger = OpenMSILogger(logger_name, streamlevel, logger_filepath, filelevel)
         super().__init__(*args, **other_kwargs)
 
     @classmethod
@@ -90,9 +88,7 @@ class LogOwner(HasArguments):
         return args, superkwargs
 
     @classmethod
-    def get_init_args_kwargs(
-        cls, parsed_args: Namespace
-    ) -> Tuple[List[str], Dict[str, Any]]:
+    def get_init_args_kwargs(cls, parsed_args: Namespace) -> Tuple[List[str], Dict[str, Any]]:
         superargs, superkwargs = super().get_init_args_kwargs(parsed_args)
         kwargs = {
             **superkwargs,

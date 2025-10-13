@@ -1,4 +1,4 @@
-" Class for tests that use an OpenMSILogger "
+"Class for tests that use an OpenMSILogger"
 
 # imports
 import unittest

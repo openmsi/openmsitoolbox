@@ -1,4 +1,4 @@
-" Argument parser callback functions "
+"Argument parser callback functions"
 
 # imports
 import pathlib
@@ -51,9 +51,7 @@ def create_dir(argstring: str) -> pathlib.Path:
     if dirpath.is_dir():
         return dirpath.resolve()
     if dirpath.exists():
-        raise RuntimeError(
-            f"ERROR: directory path {argstring} exists but is not a directory!"
-        )
+        raise RuntimeError(f"ERROR: directory path {argstring} exists but is not a directory!")
     dirpath.mkdir(parents=True)
     return dirpath.resolve()
 
@@ -65,9 +63,7 @@ def int_power_of_two(argval: str) -> int:
     if not isinstance(argval, int):
         argval = int(argval)
     if argval <= 0 or math.ceil(math.log2(argval)) != math.floor(math.log2(argval)):
-        raise ValueError(
-            f"ERROR: invalid argument: {argval} must be a (nonzero) power of two!"
-        )
+        raise ValueError(f"ERROR: invalid argument: {argval} must be a (nonzero) power of two!")
     return argval
 
 
@@ -77,7 +73,5 @@ def positive_int(argval: str) -> int:
     """
     argval = int(argval)
     if (not isinstance(argval, int)) or (argval < 1):
-        raise ValueError(
-            f"ERROR: invalid argument: {argval} must be a positive integer!"
-        )
+        raise ValueError(f"ERROR: invalid argument: {argval} must be a positive integer!")
     return argval

@@ -1,4 +1,4 @@
-" Class for any tests that should put output in some location "
+"Class for any tests that should put output in some location"
 
 # imports
 import shutil
@@ -32,9 +32,7 @@ class TestWithOutputLocation(TestWithLogger):
             )
         # if output from a previous test already exists, remove it
         if self.output_dir.is_dir():
-            self.log_at_info(
-                f"Will delete existing output location at {self.output_dir}"
-            )
+            self.log_at_info(f"Will delete existing output location at {self.output_dir}")
             try:
                 shutil.rmtree(self.output_dir)
             except Exception as exc:  # pylint: disable=broad-except

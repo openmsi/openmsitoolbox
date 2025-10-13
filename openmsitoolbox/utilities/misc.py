@@ -1,4 +1,4 @@
-" Some miscellaneous functions that are universally internally available "
+"Some miscellaneous functions that are universally internally available"
 
 # imports
 from typing import Any, Dict, Type
@@ -58,9 +58,7 @@ def _ensure_classes_or_types_match_for_key(
     elif (isinstance(options, tuple) and type(test) not in options[1:]) or (
         not isinstance(options, tuple) and not isinstance(test, type(options))
     ):
-        errmsg = (
-            f'ERROR: Type mismatch replacing argument "{key}" with {test} (expected '
-        )
+        errmsg = f'ERROR: Type mismatch replacing argument "{key}" with {test} (expected '
         if isinstance(options, tuple):
             for typestring in options[1:]:
                 errmsg += f"{typestring}, "
@@ -86,9 +84,7 @@ def populated_kwargs(
                 if len(defaults[key]) == 1:
                     defaults[key] = (defaults[key])[0]
             # check the options for what the argument is allowed to be
-            _ensure_classes_or_types_match_for_key(
-                key, given_kwargs[key], defaults[key], logger
-            )
+            _ensure_classes_or_types_match_for_key(key, given_kwargs[key], defaults[key], logger)
         # if it wasn't given, then just add it to the dictionary as the default
         else:
             if isinstance(defaults[key], tuple):
