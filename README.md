@@ -5,4 +5,4 @@
 
 Various Python utilities (logging, argument parsing, command line running, etc.) for use in other OpenMSI projects
 
-Developed for Open MSI (NSF DMREF award #1921959)
+Developed for Open MSI (NSF DMREF award [#1921959](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1921959))
