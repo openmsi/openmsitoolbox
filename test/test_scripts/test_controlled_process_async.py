@@ -1,10 +1,7 @@
-"""Testing the async controlled process"""
-
-import unittest
 import asyncio
+import pytest
 from openmsitoolbox import ControlledProcessAsync
 
-# some constants
 TIMEOUT_SECS = 10
 
 
@@ -36,43 +33,31 @@ class ControlledProcessAsyncForTesting(ControlledProcessAsync):
         self.post_run_called = True
 
 
-class TestControlledProcessAsync(unittest.TestCase):
-    """
-    Testing ControlledProcessAsync utility
-    """
+@pytest.mark.asyncio
+async def test_controlled_process_async():
+    """Test the async ControlledProcessAsync behavior."""
+    cpa = ControlledProcessAsyncForTesting(update_secs=5)
+    assert cpa.counter == 0
 
-    async def async_test_assertions(self, controlled_process, stop_event):
-        """Make the assertions necessary to test the async controlled process"""
+    stop_event = asyncio.Event()
+
+    async def assertions():
         await asyncio.sleep(1)
-        await controlled_process.control_command_queue.put("c")
-        await controlled_process.control_command_queue.put("check")
+        await cpa.control_command_queue.put("c")
+        await cpa.control_command_queue.put("check")
         await asyncio.sleep(1)
-        self.assertTrue(controlled_process.checked)
-        self.assertFalse(controlled_process.on_shutdown_called)
-        self.assertFalse(controlled_process.post_run_called)
-        await controlled_process.control_command_queue.put("q")
+        assert cpa.checked
+        assert not cpa.on_shutdown_called
+        assert not cpa.post_run_called
+
+        await cpa.control_command_queue.put("q")
         await asyncio.sleep(2.0)
-        self.assertTrue(controlled_process.on_shutdown_called)
-        self.assertTrue(controlled_process.post_run_called)
+        assert cpa.on_shutdown_called
+        assert cpa.post_run_called
         stop_event.set()
 
-    async def run_async_tests(self, controlled_process):
-        """Gather the controlled process's run loop and the test assertions, along
-        with a timeout
-        """
-        stop_event = asyncio.Event()
-        await asyncio.gather(
-            controlled_process.run_loop(),
-            self.async_test_assertions(controlled_process, stop_event),
-            stop_event.wait(),
-        )
-
-    def test_controlled_process_async(self):
-        """
-        Test the async controlled process
-        """
-        cpa = ControlledProcessAsyncForTesting(update_secs=5)
-        self.assertEqual(cpa.counter, 0)
-        asyncio.run(
-            asyncio.wait_for(self.run_async_tests(cpa), timeout=TIMEOUT_SECS),
-        )
+    # Run the process loop + assertions concurrently
+    await asyncio.wait_for(
+        asyncio.gather(cpa.run_loop(), assertions(), stop_event.wait()),
+        timeout=TIMEOUT_SECS,
+    )

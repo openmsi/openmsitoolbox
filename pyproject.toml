@@ -18,6 +18,9 @@ black = "*"
 pyflakes = "*"
 pylint = "*"
 requests = "*"
+pytest = "*"
+pytest-asyncio = "*"
+
 
 [build-system]
 requires = ["poetry-core"]
