@@ -20,6 +20,14 @@ pylint = "*"
 requests = "*"
 pytest = "*"
 pytest-asyncio = "*"
+pytest-cov = "*"
+
+
+[tool.pytest.ini_options]
+testpaths = ["test/test_scripts"]
+pythonpath = ["test/test_scripts"]
+asyncio_mode = "auto"
+addopts = "--cov=openmsitoolbox --cov-report=term-missing --cov-report=xml"
 
 
 [build-system]
