@@ -1,4 +1,4 @@
-" Argument parser callback functions "
+"Argument parser callback functions"
 
 # imports
 import pathlib

@@ -1,4 +1,4 @@
-" Anything that owns an OpenMSILogger "
+"Anything that owns an OpenMSILogger"
 
 # imports
 from argparse import Namespace
@@ -54,13 +54,13 @@ class LogOwner(HasArguments):
 
     def __init__(
         self,
-        *args,
+        *_args,
         logger: OpenMSILogger = None,
         logger_name: str = None,
         streamlevel: int = logging.INFO,
         logger_file: pathlib.Path = None,
         filelevel: int = logging.WARNING,
-        **other_kwargs,
+        **_other_kwargs,
     ) -> None:
         if logger is not None:
             self.__logger = logger
@@ -73,7 +73,8 @@ class LogOwner(HasArguments):
             self.__logger = OpenMSILogger(
                 logger_name, streamlevel, logger_filepath, filelevel
             )
-        super().__init__(*args, **other_kwargs)
+        # super().__init__(*args, **other_kwargs)
+        super().__init__()
 
     @classmethod
     def get_command_line_arguments(cls) -> Tuple[List[str], Dict[str, Any]]:

@@ -1,4 +1,4 @@
-" Imports from the logging submodule "
+"Imports from the logging submodule"
 
 from .openmsi_logger import OpenMSILogger
 

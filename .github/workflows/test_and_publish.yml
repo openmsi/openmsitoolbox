@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.9"
+
+    - name: Install Poetry
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+
+    - name: Install dependencies
+      run: poetry install --with test
+
+    - name: Format check with Black
+      run: |
+        poetry run black openmsitoolbox test --check
+
+    - name: Check with pyflakes
+      run: poetry run pyflakes openmsitoolbox test
+
+    - name: Lint with pylint
+      run: |
+        poetry run pylint openmsitoolbox
+        poetry run pylint --recursive=y test \
+          --init-hook="import sys; sys.path.insert(0, 'test/test_scripts')"
+
+    - name: Run tests with pytest
+      run: poetry run pytest

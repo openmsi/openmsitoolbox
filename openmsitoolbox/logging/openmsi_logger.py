@@ -1,4 +1,4 @@
-" OpenMSI-configured logger "
+"OpenMSI-configured logger"
 
 # imports
 import logging
@@ -38,6 +38,7 @@ class OpenMSILogger:
         streamlevel: int = logging.INFO,
         logger_filepath: pathlib.Path = None,
         filelevel: str = logging.WARNING,
+        *,
         conf_global_logger: bool = True,
     ) -> None:
         """

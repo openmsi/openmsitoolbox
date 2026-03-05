@@ -1,4 +1,4 @@
-" A ControlledProcess running with more than one thread "
+"A ControlledProcess running with more than one thread"
 
 # imports
 from argparse import Namespace

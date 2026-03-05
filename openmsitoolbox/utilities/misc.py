@@ -1,4 +1,4 @@
-" Some miscellaneous functions that are universally internally available "
+"Some miscellaneous functions that are universally internally available"
 
 # imports
 from typing import Any, Dict, Type
