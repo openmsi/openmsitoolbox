@@ -1,3 +1,4 @@
+"Tests for single-threaded and multi-threaded ControlledProcess variants."
 import time
 import pytest
 from openmsitoolbox.utilities.exception_tracking_thread import ExceptionTrackingThread
@@ -8,6 +9,8 @@ N_THREADS = 3
 
 
 class ControlledProcessSingleThreadForTesting(ControlledProcessSingleThread):
+    """Single-threaded ControlledProcess subclass for testing."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.counter = 0
@@ -26,6 +29,8 @@ class ControlledProcessSingleThreadForTesting(ControlledProcessSingleThread):
 
 
 class ControlledProcessMultiThreadedForTesting(ControlledProcessMultiThreaded):
+    """Multi-threaded ControlledProcess subclass for testing."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.counter = 0
@@ -47,18 +52,15 @@ class ControlledProcessMultiThreadedForTesting(ControlledProcessMultiThreaded):
 
 
 @pytest.mark.parametrize(
-    "ProcessClass,kwargs",
+    "process_class,kwargs",
     [
         (ControlledProcessSingleThreadForTesting, {"update_secs": 5}),
-        (
-            ControlledProcessMultiThreadedForTesting,
-            {"n_threads": N_THREADS, "update_secs": 5},
-        ),
+        (ControlledProcessMultiThreadedForTesting, {"n_threads": N_THREADS, "update_secs": 5}),
     ],
 )
-def test_controlled_process(ProcessClass, kwargs):
+def test_controlled_process(process_class, kwargs):
     """Test both single- and multi-threaded controlled process variants."""
-    cp = ProcessClass(**kwargs)
+    cp = process_class(**kwargs)
     assert cp.counter == 0
 
     run_thread = ExceptionTrackingThread(target=cp.run)

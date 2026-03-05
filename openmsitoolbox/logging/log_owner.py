@@ -54,13 +54,13 @@ class LogOwner(HasArguments):
 
     def __init__(
         self,
-        *args,
+        *_args,
         logger: OpenMSILogger = None,
         logger_name: str = None,
         streamlevel: int = logging.INFO,
         logger_file: pathlib.Path = None,
         filelevel: int = logging.WARNING,
-        **other_kwargs,
+        **_other_kwargs,
     ) -> None:
         if logger is not None:
             self.__logger = logger

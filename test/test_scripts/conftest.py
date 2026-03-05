@@ -1,4 +1,4 @@
-# conftest.py (pytest automatically discovers fixtures here)
+"Pytest fixtures and hooks shared across all test modules."
 import logging
 import shutil
 import pytest
@@ -25,7 +25,7 @@ def output_dir(tmp_path, request):
 
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(item, call):  # pylint: disable=unused-argument
     """Hook that attaches test results (setup/call/teardown) to the test item."""
     # yield to let pytest run the test and get its report
     outcome = yield

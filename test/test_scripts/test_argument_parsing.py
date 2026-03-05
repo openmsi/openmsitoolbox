@@ -1,3 +1,4 @@
+"Tests for argument parsing utilities."
 import os
 import pathlib
 import pytest
