@@ -1,4 +1,5 @@
 "Tests for single-threaded and multi-threaded ControlledProcess variants."
+
 import time
 import pytest
 from openmsitoolbox.utilities.exception_tracking_thread import ExceptionTrackingThread
@@ -55,7 +56,10 @@ class ControlledProcessMultiThreadedForTesting(ControlledProcessMultiThreaded):
     "process_class,kwargs",
     [
         (ControlledProcessSingleThreadForTesting, {"update_secs": 5}),
-        (ControlledProcessMultiThreadedForTesting, {"n_threads": N_THREADS, "update_secs": 5}),
+        (
+            ControlledProcessMultiThreadedForTesting,
+            {"n_threads": N_THREADS, "update_secs": 5},
+        ),
     ],
 )
 def test_controlled_process(process_class, kwargs):
