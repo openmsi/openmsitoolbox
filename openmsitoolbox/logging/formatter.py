@@ -1,4 +1,4 @@
-" OpenMSI logging formatter "
+"OpenMSI logging formatter"
 
 # imports
 import logging

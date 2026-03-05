@@ -1,4 +1,4 @@
-" Anything that owns an OpenMSILogger "
+"Anything that owns an OpenMSILogger"
 
 # imports
 from argparse import Namespace

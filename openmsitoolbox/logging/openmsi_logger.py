@@ -1,4 +1,4 @@
-" OpenMSI-configured logger "
+"OpenMSI-configured logger"
 
 # imports
 import logging

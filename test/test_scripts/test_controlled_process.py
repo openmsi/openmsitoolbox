@@ -50,7 +50,10 @@ class ControlledProcessMultiThreadedForTesting(ControlledProcessMultiThreaded):
     "ProcessClass,kwargs",
     [
         (ControlledProcessSingleThreadForTesting, {"update_secs": 5}),
-        (ControlledProcessMultiThreadedForTesting, {"n_threads": N_THREADS, "update_secs": 5}),
+        (
+            ControlledProcessMultiThreadedForTesting,
+            {"n_threads": N_THREADS, "update_secs": 5},
+        ),
     ],
 )
 def test_controlled_process(ProcessClass, kwargs):

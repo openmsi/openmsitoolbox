@@ -55,6 +55,7 @@ def test_existing_file(tmp_path):
     with pytest.raises(TypeError):
         existing_file(None)
 
+
 def test_existing_dir(output_dir):
     """Test the existing_dir argument parser callback"""
     assert output_dir.is_dir()

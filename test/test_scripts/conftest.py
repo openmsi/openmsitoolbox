@@ -3,6 +3,7 @@ import logging
 import shutil
 import pytest
 
+
 @pytest.fixture
 def logger():
     """Provide a simple logger for tests."""
@@ -10,6 +11,7 @@ def logger():
     log.setLevel(logging.DEBUG)
     yield log
     # cleanup if needed
+
 
 @pytest.fixture
 def output_dir(tmp_path, request):
@@ -20,7 +22,8 @@ def output_dir(tmp_path, request):
     # Pytest auto-cleans tmp_path, but you can explicitly handle success/failure
     if request.node.rep_call.passed:
         shutil.rmtree(test_dir, ignore_errors=True)
-        
+
+
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     """Hook that attaches test results (setup/call/teardown) to the test item."""
@@ -29,4 +32,3 @@ def pytest_runtest_makereport(item, call):
     rep = outcome.get_result()
     # attach report attributes to the test item, like item.rep_call
     setattr(item, "rep_" + rep.when, rep)
-
