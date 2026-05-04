@@ -21,7 +21,9 @@ def add_user_input(input_queue: Queue) -> None:
     """
     while True:
         time.sleep(1)
-        input_queue.put((sys.stdin.read(1)).strip())
+        cmd = (sys.stdin.read(1)).strip()
+        if cmd:
+            input_queue.put(cmd)
 
 
 class ControlledProcess(LogOwner, ABC):
@@ -49,7 +51,7 @@ class ControlledProcess(LogOwner, ABC):
         self,
         *args,
         update_secs: int = OpenMSIArgumentParser.DEF_UPDATE_SECS,
-        **other_kwargs
+        **other_kwargs,
     ) -> None:
         self.__update_secs = update_secs
         # start up a Queue that will hold the control commands
@@ -89,17 +91,18 @@ class ControlledProcess(LogOwner, ABC):
 
     def _check_control_command_queue(self) -> None:
         # if anything exists in the control command queue
-        try:
-            cmd = self.control_command_queue.get(block=True, timeout=0.05)
-        except Empty:
-            cmd = None
-        if cmd is not None:
+        while True:
+            try:
+                cmd = self.control_command_queue.get(block=True, timeout=0.05)
+            except Empty:
+                return
             if cmd.lower() in ("q", "quit"):  # shut down the process
                 self.shutdown()
+                return
             elif cmd.lower() in ("c", "check"):  # run the on_check function
                 self._on_check()
-            else:  # otherwise just skip this unrecognized command
-                self._check_control_command_queue()
+                return
+            # otherwise just skip this unrecognized command and check the next one
 
     #################### CLASS METHODS ####################
 
